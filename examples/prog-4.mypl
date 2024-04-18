@@ -1,0 +1,219 @@
+void main()
+{
+    int DICE_IN_PLAY = 5 
+    array int hand = new int[5]
+    string playAgain = "y" 
+
+while (playAgain == "y")
+{
+    string keep = "nnnnn"
+    int turn = 1 
+    while ((turn < 4) and not(keep == "yyyyy"))
+    {
+        for (int dieNumber = 0;  dieNumber < DICE_IN_PLAY; dieNumber = dieNumber + 1)
+        {
+            if(not(get(dieNumber, keep) == 'y')){
+                hand[dieNumber] = rollDie() 
+            }
+        }
+         print("Your roll was: ") 
+        for (int dieNumber = 0; dieNumber < DICE_IN_PLAY; dieNumber = dieNumber + 1)
+        {
+             print(hand[dieNumber])
+             print(" ") 
+        }
+         print('\n') 
+        if (turn < 3)
+        {
+             print("enter dice to keep (y or n) ") 
+             keep = input()
+        }
+        turn = turn + 1 
+    }
+
+    sortArray(hand, DICE_IN_PLAY) 
+     print("Here is your sorted hand : " )
+    for (int dieNumber = 0; dieNumber < DICE_IN_PLAY; dieNumber = dieNumber + 1)
+        {
+             print(hand[dieNumber])
+             print(" ") 
+        }
+         print('\n')
+    for (int dieValue = 1; dieValue <=6; dieValue = dieValue + 1)
+    {
+        int currentCount = 0 
+        for (int diePosition = 0;  diePosition < 5; diePosition = diePosition + 1)
+        {
+            if (hand[diePosition] == dieValue){
+                currentCount = currentCount + 1
+            }
+        }
+         print("Score ")
+         print(dieValue * currentCount)
+         print(" on the ") 
+         print(dieValue)
+         print(" line")
+         print('\n')
+    }
+    if (maxOfAKindFound(hand) >= 3)
+    {
+         print("Score ")
+         print(totalAllDice(hand))
+         print(" on the ") 
+         print("3 of a Kind line")
+         print('\n') 
+    }
+    else{
+        print("Score 0 on the 3 of a Kind line")
+        print('\n')
+    }
+    if (maxOfAKindFound(hand) >= 4)
+    {
+         print("Score ")
+         print(totalAllDice(hand))
+         print(" on the ") 
+         print("4 of a Kind line")
+         print('\n') 
+    }
+    else{
+        print("Score 0 on the 4 of a Kind line")
+        print('\n') 
+    }
+    if (fullHouseFound(hand)){
+         print("Score 25 on the Full House line")
+         print('\n') 
+    }
+    else{
+         print("Score 0 on the Full House line")
+         print('\n') 
+    }
+    if (maxStraightFound(hand) >= 4){
+         print("Score 30 on the Small Straight line")
+         print('\n')
+    } 
+    else{
+         print("Score 0 on the Small Straight line")
+         print('\n')
+    }
+    if (maxStraightFound(hand) >= 5){
+         print("Score 40 on the Large Straight line")
+         print('\n') 
+    }
+    else{
+         print("Score 0 on the Large Straight line")
+         print('\n') 
+    }
+    if (maxOfAKindFound(hand) >= 5){
+         print("Score 50 on the Yahtzee line")
+         print('\n') 
+    }
+    else{
+         print( "Score 0 on the Yahtzee line")
+         print('\n') 
+    }
+     print("Score ")
+     print(totalAllDice(hand))
+     print(" on the ") 
+     print("Chance line")
+     print('\n') 
+     print("Enter 'y' to play again ") 
+     playAgain = input()
+    }
+}
+int rollDie()
+{
+    int roll = rand_int(1,5) + 1
+    return roll 
+}
+int maxOfAKindFound(array int hand)
+{
+    int maxCount = 0 
+    int currentCount = 0
+    for(int dieValue = 1; dieValue <=6; dieValue = dieValue + 1)
+    {
+        currentCount = 0 
+        for (int diePosition = 0; diePosition < 5; diePosition = diePosition + 1)
+        {
+            if (hand[diePosition] == dieValue){
+                currentCount = currentCount + 1
+            } 
+        }
+        if (currentCount > maxCount){
+            maxCount = currentCount 
+        }
+    }
+    return maxCount 
+}
+int totalAllDice(array int hand)
+{
+    int total = 0 
+    for (int diePosition = 0; diePosition < 5; diePosition = diePosition + 1)
+    {
+        total = total + hand[diePosition] 
+    }
+    return total 
+}
+void sortArray(array int xs, int size)
+{
+   bool swap = true
+   int temp = 0
+
+   while(swap){
+      swap = false 
+      for (int count = 0; count < (size - 1); count = count + 1)
+      {
+         if (xs[count] > xs[count + 1])
+         {
+            temp = xs[count] 
+            xs[count] = xs[count + 1] 
+            xs[count + 1] = temp 
+            swap = true 
+         }
+      }
+   }
+}
+int maxStraightFound(array int hand)
+{
+    int maxLength = 1
+    int curLength = 1 
+    for(int counter = 0; counter < 4; counter = counter + 1)
+    {
+        if ((hand[counter] + 1) == hand[counter + 1] ){
+            curLength = curLength + 1 
+        }
+        elseif((hand[counter] + 1) < hand[counter + 1]){
+            curLength = 1 
+        }
+        if (curLength > maxLength){
+            maxLength = curLength 
+        }
+    }
+    return maxLength 
+}
+bool fullHouseFound(array int hand)
+{
+    bool foundFH = false 
+    bool found3K = false 
+    bool found2K = false 
+    int currentCount = 0
+    for (int dieValue = 1; dieValue <=6; dieValue = dieValue + 1)
+    {
+        currentCount = 0 
+        for (int diePosition = 0;  diePosition < 5;  diePosition = diePosition + 1)
+        {
+            if (hand[diePosition] == dieValue){
+                currentCount = currentCount + 1
+            } 
+        }
+        if (currentCount == 2){
+            found2K = true 
+        }
+        if (currentCount == 3){
+            found3K = true 
+        }
+    }
+    if (found2K and found3K){
+        foundFH = true 
+    }
+    return foundFH 
+}

@@ -1,0 +1,52 @@
+#AUTH: Parker Bixby
+
+int mod(int x, int y){
+    while(x >= y){
+        x = x - y
+    }
+    return x
+}
+     
+void main()
+{
+    print("Enter an integer: ")
+    int primes = to_int(input())
+    print("Enter an integer to represent the number of columns: ")
+    int col = to_int(input())
+    display(primes, col)
+
+}
+
+
+bool is_prime(int n) {
+  int m = n / 2
+  int v = 2
+  while (v <= m) {
+    int r = n / v
+    int p = r * v
+    if (p == n) {
+      return false
+    }
+    v = v + 1
+  }
+  return true
+}
+
+void display(int primes, int columns){
+    int count = 1
+    int value = 2
+    while(value <= primes)
+    {
+        if(is_prime(value)){
+            print(value)
+            print('\t')
+            if(mod(count, columns) == 0)
+            {
+                print('\n')
+            }
+            count = count + 1
+        }
+        value = value + 1
+    }
+    print('\n')
+}

@@ -1,0 +1,16 @@
+void main(){
+    print("Pick two numbers you would like to choose between ")
+    print("\n")
+    print("This is the lower number: ")
+    int x = to_int(input())
+    print("This is the upper range: ")
+    int y = to_int(input())
+    print("The random number that you generated  between the range ")
+    print(x)
+    print(" and ")
+    print (y)
+    print(" is: ")
+    int z = rand_int(x,y)
+    print(z)
+    print("\n")
+}
